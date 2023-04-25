@@ -8,9 +8,10 @@ datasource db {
 }
 
 model User {
-  id                String    @id @default(uuid())
+  id                String    @id @unique
   name              String?
   email             String    @unique
+  image             String?
   role              Role      @default(BASIC)
   uploadedProducts  Product[] @relation("UploadedProducts")
   favoriteProdducts Product[] @relation("FavoriteProducts")
