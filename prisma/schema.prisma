@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String    @id @default(uuid())
+  name              String?
+  email             String    @unique
+  role              Role      @default(BASIC)
+  uploadedProducts  Product[] @relation("UploadedProducts")
+  favoriteProdducts Product[] @relation("FavoriteProducts")
+
+  @@index([id, email])
+}
+
+model Product {
+  id           String     @id @default(uuid())
+  title        String
+  description  String
+  uploadedBy   User       @relation("UploadedProducts", fields: [uploaderById], references: [id])
+  uploaderById String
+  favoriteBy   User[]     @relation("FavoriteProducts")
+  categories   Category[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([id])
+}
+
+model Category {
+  id       String    @id @default(uuid())
+  name     String    @unique
+  products Product[]
+
+  @@index([id, name])
+}
+
+enum Role {
+  BASIC
+  ADMIN
+}
