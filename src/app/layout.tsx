@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import AuthContext from "@/context/AuthContext";
+import SwrConfigContext from "@/context/SwrConfigContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,7 @@ export default function RootLayout({
         <main className="flex flex-col w-full max-w-screen-2xl mx-auto">
           <AuthContext>
             <Navbar />
-            {children}
+            <SwrConfigContext>{children}</SwrConfigContext>
           </AuthContext>
         </main>
       </body>
