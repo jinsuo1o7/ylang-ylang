@@ -23,6 +23,8 @@ model Product {
   id           String     @id @default(uuid())
   title        String
   description  String
+  price        Int
+  image        String
   uploadedBy   User       @relation("UploadedProducts", fields: [uploaderById], references: [id])
   uploaderById String
   favoriteBy   User[]     @relation("FavoriteProducts")
